@@ -28,13 +28,13 @@ const app = express();
 
 // Security Headers
 app.use(helmet({
-  contentSecurityPolicy: false // Allow inline scripts for demo flexibility
+contentSecurityPolicy: false // Allow inline scripts for demo flexibility
 }));
 
 // CORS Configuration
 app.use(cors({
-  origin: true, // Allow all origins for dev simplicity
-  credentials: true
+origin: true, // Allow all origins for dev simplicity
+credentials: true
 }));
 
 // Body parser & Cookie parser
@@ -43,9 +43,9 @@ app.use(cookieParser());
 
 // Rate Limiting (Prevent abuse)
 const limiter = rateLimit({
-  windowMs: 10 * 60 * 1000, // 10 minutes
-  max: 300, // limit each IP to 300 requests per windowMs
-  message: { success: false, error: 'Too many requests. Please try again later.' }
+windowMs: 10 * 60 * 1000, // 10 minutes
+max: 300, // limit each IP to 300 requests per windowMs
+message: { success: false, error: 'Too many requests. Please try again later.' }
 });
 app.use('/api/', limiter);
 
@@ -60,17 +60,10 @@ app.use('/api/forum', forum);
 app.use('/api/admin', admin);
 app.use('/api/resources', resources);
 
-// Serve Frontend static assets in Production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../frontend', 'dist', 'index.html'));
-  });
-} else {
-  app.get('/', (req, res) => {
-    res.json({ message: "STUGUIDE X Backend API Server is running." });
-  });
-}
+// Root Route
+app.get('/', (req, res) => {
+res.json({ message: "STUGUIDE X Backend API Server is running." });
+});
 
 // Centralized error handler middleware
 app.use(errorHandler);
@@ -78,12 +71,12 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
-  console.log(`[Server] STUGUIDE X running on Port ${PORT} in ${process.env.NODE_ENV || 'development'} mode.`);
+console.log(`[Server] STUGUIDE X running on Port ${PORT} in ${process.env.NODE_ENV || 'development'} mode.`);
 });
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
-  console.error(`[Fatal] Error: ${err.message}`);
-  // Close server & exit process
-  // server.close(() => process.exit(1));
+console.error(`[Fatal] Error: ${err.message}`);
+// Close server & exit process
+// server.close(() => process.exit(1));
 });
