@@ -17,7 +17,7 @@ export default function Topbar({ onMenuToggle, onCommandOpen }) {
 
   const fetchNotifications = async () => {
     try {
-      const { data } = await axios.get('/api/productivity/notifications');
+      const { data } = await apiClient.get('/api/productivity/notifications');
       if (data.success) {
         setNotifications(data.data.slice(0, 8));
         setUnreadCount(data.data.filter(n => !n.isRead).length);
@@ -27,7 +27,7 @@ export default function Topbar({ onMenuToggle, onCommandOpen }) {
 
   const markRead = async (id) => {
     try {
-      await axios.put(`/api/productivity/notifications/${id}/read`);
+      await apiClient.put(`/api/productivity/notifications/${id}/read`);
       setNotifications(prev => prev.map(n => n._id === id ? { ...n, isRead: true } : n));
       setUnreadCount(prev => Math.max(0, prev - 1));
     } catch {}

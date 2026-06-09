@@ -16,7 +16,7 @@ export default function Reports() {
   const fetchStats = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/admin/stats');
+      const { data } = await apiClient.get('/api/admin/stats');
       if (data.success) setStats(data.data);
     } catch (err) {
       setError(err.response?.data?.error || 'Reports are available to Admin and Placement Officer roles.');
@@ -29,7 +29,7 @@ export default function Reports() {
     setExporting(type);
     setError('');
     try {
-      const { data } = await axios.get(`/api/admin/reports/${type}`, { responseType: 'blob' });
+      const { data } = await apiClient.get(`/api/admin/reports/${type}`, { responseType: 'blob' });
       const href = URL.createObjectURL(data);
       const link = document.createElement('a');
       link.href = href;

@@ -17,7 +17,7 @@ export default function Habits() {
   const fetchHabits = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/productivity/habits');
+      const { data } = await apiClient.get('/api/productivity/habits');
       if (data.success) setHabits(data.data);
     } catch (err) {
       console.warn("Failed loading habits list.", err);
@@ -30,7 +30,7 @@ export default function Habits() {
     e.preventDefault();
     if (!habitName.trim()) return;
     try {
-      const { data } = await axios.post('/api/productivity/habits', { name: habitName.trim() });
+      const { data } = await apiClient.post('/api/productivity/habits', { name: habitName.trim() });
       if (data.success) {
         setHabitName('');
         fetchHabits();
@@ -42,7 +42,7 @@ export default function Habits() {
 
   const handleCompleteToday = async (habitId) => {
     try {
-      const { data } = await axios.put(`/api/productivity/habits/${habitId}/complete`);
+      const { data } = await apiClient.put(`/api/productivity/habits/${habitId}/complete`);
       if (data.success) {
         fetchHabits();
       }

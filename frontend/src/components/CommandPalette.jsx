@@ -44,7 +44,7 @@ export default function CommandPalette({ open, onClose }) {
     }
     const timer = setTimeout(async () => {
       try {
-        const { data } = await axios.get(`/api/guidance/roles`);
+        const { data } = await apiClient.get(`/api/guidance/roles`);
         // Filter static results by query for roles
         if (data.success) {
           const filtered = data.data.filter(r =>

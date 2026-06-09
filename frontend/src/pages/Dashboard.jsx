@@ -52,14 +52,14 @@ export default function Dashboard() {
     try {
       setLoading(true);
       if (user?.role === 'Student') {
-        const { data: pData } = await axios.get('/api/profile/me');
+        const { data: pData } = await apiClient.get('/api/profile/me');
         if (pData.success) setProfile(pData.data);
       }
       
-      const { data: dData } = await axios.get('/api/placement/drives');
+      const { data: dData } = await apiClient.get('/api/placement/drives');
       if (dData.success) setDrives(dData.data.slice(0, 4));
 
-      const { data: lData } = await axios.get('/api/mocktest/leaderboard');
+      const { data: lData } = await apiClient.get('/api/mocktest/leaderboard');
       if (lData.success) setLeaderboard(lData.data.slice(0, 5));
     } catch (err) {
       console.warn("Failed fetching dashboard metrics, using fallbacks.", err);

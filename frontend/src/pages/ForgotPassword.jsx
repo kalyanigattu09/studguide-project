@@ -16,7 +16,7 @@ export default function ForgotPassword() {
     setError('');
     setResult(null);
     try {
-      const { data } = await axios.post('/api/auth/forgot-password', { email });
+      const { data } = await apiClient.post('/api/auth/forgot-password', { email });
       setResult(data);
     } catch (err) {
       setError(err.response?.data?.error || 'Could not generate reset token.');

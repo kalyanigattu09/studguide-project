@@ -21,7 +21,7 @@ export default function Notifications() {
   const fetchNotifications = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/productivity/notifications');
+      const { data } = await apiClient.get('/api/productivity/notifications');
       if (data.success) setNotifications(data.data);
     } catch (err) {
       console.warn('Failed loading notifications.', err);
@@ -32,7 +32,7 @@ export default function Notifications() {
 
   const markRead = async (id) => {
     try {
-      await axios.put(`/api/productivity/notifications/${id}/read`);
+      await apiClient.put(`/api/productivity/notifications/${id}/read`);
       setNotifications((items) => items.map((item) => item._id === id ? { ...item, isRead: true } : item));
     } catch (err) {
       console.warn('Failed marking notification as read.', err);

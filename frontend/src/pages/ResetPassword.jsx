@@ -16,7 +16,7 @@ export default function ResetPassword() {
     setLoading(true);
     setError('');
     try {
-      const { data } = await axios.put(`/api/auth/reset-password/${token}`, { password });
+      const { data } = await apiClient.put(`/api/auth/reset-password/${token}`, { password });
       localStorage.setItem('sg_token', data.token);
       navigate('/dashboard');
     } catch (err) {

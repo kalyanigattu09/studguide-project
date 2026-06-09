@@ -31,7 +31,7 @@ export default function Profile() {
   const fetchProfile = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/profile/me');
+      const { data } = await apiClient.get('/api/profile/me');
       if (data.success) {
         setProfile(data.data);
         if (data.data.resumeScore) setAtsScore(data.data.resumeScore);
@@ -64,7 +64,7 @@ export default function Profile() {
         ...fieldsToMerge
       };
 
-      const { data } = await axios.post('/api/profile', payload);
+      const { data } = await apiClient.post('/api/profile', payload);
       if (data.success) {
         setProfile(data.data);
         setMessage({ text: 'Profile updated successfully!', type: 'success' });

@@ -25,7 +25,7 @@ export default function ResumeAnalyzer() {
     setLoading(true);
     setError('');
     try {
-      const { data } = await axios.post('/api/profile/analyze-resume', { resumeText });
+      const { data } = await apiClient.post('/api/profile/analyze-resume', { resumeText });
       if (data.success) setResult(data.data);
     } catch (err) {
       setError(err.response?.data?.error || 'Resume analysis failed.');

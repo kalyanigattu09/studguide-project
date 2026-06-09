@@ -29,7 +29,7 @@ export default function Forum() {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/forum');
+      const { data } = await apiClient.get('/api/forum');
       if (data.success) setPosts(data.data);
     } catch (err) {
       console.warn("Failed fetching community posts.", err);
@@ -42,7 +42,7 @@ export default function Forum() {
     e.preventDefault();
     if (!postTitle.trim() || !postContent.trim()) return;
     try {
-      const { data } = await axios.post('/api/forum', {
+      const { data } = await apiClient.post('/api/forum', {
         title: postTitle.trim(),
         content: postContent.trim(),
         tags: postTags.split(',').map(t => t.trim()).filter(Boolean)
@@ -62,7 +62,7 @@ export default function Forum() {
   const handleLikePost = async (postId, e) => {
     e.stopPropagation(); // Avoid selecting thread row
     try {
-      const { data } = await axios.put(`/api/forum/${postId}/like`);
+      const { data } = await apiClient.put(`/api/forum/${postId}/like`);
       if (data.success) {
         // Like endpoint returns { success, likesCount, likes } — no .data wrapper
         setPosts(prev => prev.map(p => p._id === postId ? { ...p, likes: data.likes } : p));
@@ -78,7 +78,7 @@ export default function Forum() {
   const handleViewPostDetails = async (post) => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/forum/${post._id}`);
+      const { data } = await apiClient.get(`/api/forum/${post._id}`);
       if (data.success) {
         // Backend returns { data: { post, comments } } — flatten into a single object
         setSelectedPost({ ...data.data.post, comments: data.data.comments || [] });
@@ -94,13 +94,13 @@ export default function Forum() {
     e.preventDefault();
     if (!newCommentText.trim()) return;
     try {
-      const { data } = await axios.post(`/api/forum/${selectedPost._id}/comment`, {
+      const { data } = await apiClient.post(`/api/forum/${selectedPost._id}/comment`, {
         content: newCommentText.trim()
       });
       if (data.success) {
         setNewCommentText('');
         // Reload details — backend returns { data: { post, comments } }
-        const { data: details } = await axios.get(`/api/forum/${selectedPost._id}`);
+        const { data: details } = await apiClient.get(`/api/forum/${selectedPost._id}`);
         if (details.success) {
           setSelectedPost({ ...details.data.post, comments: details.data.comments || [] });
           // Update parent post comment count

@@ -31,7 +31,7 @@ export default function Resources() {
   const fetchResources = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/resources', {
+      const { data } = await apiClient.get('/api/resources', {
         params: { q: query, category, type, bookmarked: bookmarkedOnly }
       });
       if (data.success) {
@@ -49,7 +49,7 @@ export default function Resources() {
 
   const toggleBookmark = async (resourceId) => {
     try {
-      const { data } = await axios.put(`/api/resources/${resourceId}/bookmark`);
+      const { data } = await apiClient.put(`/api/resources/${resourceId}/bookmark`);
       if (data.success) {
         setResources((items) => items.map((item) => item._id === resourceId ? data.data : item));
       }

@@ -40,7 +40,7 @@ export default function Admin() {
   const fetchAdminData = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/mocktest/leaderboard');
+      const { data } = await apiClient.get('/api/mocktest/leaderboard');
       if (data.success) {
         setStudents(data.data);
       }

@@ -44,7 +44,7 @@ export default function MockTest() {
   const fetchTests = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/mocktest');
+      const { data } = await apiClient.get('/api/mocktest');
       if (data.success) setTests(data.data);
     } catch (err) {
       console.warn("Failed fetching mock tests list.", err);
@@ -56,7 +56,7 @@ export default function MockTest() {
   const handleStartTest = async (testId) => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/mocktest/${testId}`);
+      const { data } = await apiClient.get(`/api/mocktest/${testId}`);
       if (data.success) {
         setActiveTest(data.data);
         setCurrentQuestionIndex(0);
@@ -86,7 +86,7 @@ export default function MockTest() {
         answers[idx] !== undefined ? answers[idx] : null
       );
 
-      const { data } = await axios.post(`/api/mocktest/${activeTest._id}/submit`, {
+      const { data } = await apiClient.post(`/api/mocktest/${activeTest._id}/submit`, {
         answers: answersArray,
         timeSpentSeconds: timeSpent
       });

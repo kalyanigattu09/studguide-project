@@ -14,7 +14,7 @@ export default function VerifyEmail() {
     setLoading(true);
     setError('');
     try {
-      const { data } = await axios.put(`/api/auth/verify-email/${token}`);
+      const { data } = await apiClient.put(`/api/auth/verify-email/${token}`);
       localStorage.setItem('sg_token', data.token);
       navigate('/dashboard');
     } catch (err) {

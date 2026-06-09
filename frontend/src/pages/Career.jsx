@@ -5,6 +5,7 @@ import {
   Target, Zap, ArrowRight, CheckCircle2, AlertTriangle, BookOpen,
   Compass, Map, Loader2, Sparkles, BrainCircuit, ExternalLink, HelpCircle
 } from 'lucide-react';
+import apiClient from '../utils/apiClient';
 
 export default function Career() {
   const [roles, setRoles] = useState([]);
@@ -21,7 +22,7 @@ export default function Career() {
   const fetchRoles = async () => {
     try {
       setLoadingRoles(true);
-      const { data } = await axios.get('/api/guidance/roles');
+      const { data } = await apiClient.get('/api/guidance/roles');
       if (data.success) {
         setRoles(data.data);
         if (data.data.length > 0) {
@@ -40,8 +41,8 @@ export default function Career() {
   const fetchRoadmapAndGaps = async (roleId) => {
     try {
       setLoadingRoadmap(true);
-      const { data: rData } = await axios.get(`/api/guidance/roadmap/${encodeURIComponent(roleId)}`);
-      const { data: gData } = await axios.post('/api/guidance/gaps', { role: roleId });
+      const { data: rData } = await apiClient.get(`/api/guidance/roadmap/${encodeURIComponent(roleId)}`);
+      const { data: gData } = await apiClient.post('/api/guidance/gaps', { role: roleId });
       
       if (rData.success) setRoadmap(rData.roadmap);
       if (gData.success) setGaps(gData);
