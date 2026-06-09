@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    const { data } = await axios.post('/api/auth/login', { email, password });
+    const { data } = await apiClient.post('/api/auth/login', { email, password });
     if (data.success) {
       localStorage.setItem('sg_token', data.token);
       setToken(data.token);
