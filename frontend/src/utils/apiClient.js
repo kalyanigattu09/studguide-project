@@ -3,7 +3,7 @@ import axios from 'axios';
 // Create an Axios instance with default settings
 const apiClient = axios.create({
   // Base URL can be left empty for relative paths
-  baseURL: 'https://studguide-project.onrender.com',,
+  baseURL: 'https://studguide-project.onrender.com',
   withCredentials: true,
 });
 
