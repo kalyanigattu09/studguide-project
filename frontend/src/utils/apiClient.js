@@ -1,19 +1,19 @@
 import axios from 'axios';
 
-// Create an Axios instance with default settings
-const apiClient = apiClient.create({
-  // Base URL can be left empty for relative paths
+const apiClient = axios.create({
   baseURL: 'https://studguide-project.onrender.com',
   withCredentials: true,
 });
 
-// Request interceptor to add Authorization header if token exists in localStorage
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('sg_token');
-  if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`;
-  }
-  return config;
-}, (error) => Promise.reject(error));
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('sg_token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export default apiClient;
