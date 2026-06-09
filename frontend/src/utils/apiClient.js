@@ -3,7 +3,7 @@ import axios from 'axios';
 // Create an Axios instance with default settings
 const apiClient = axios.create({
   // Base URL can be left empty for relative paths
-  baseURL: '',
+  baseURL: 'https://studguide-project.onrender.com',,
   withCredentials: true,
 });
 
@@ -16,4 +16,4 @@ apiClient.interceptors.request.use((config) => {
   return config;
 }, (error) => Promise.reject(error));
 
-export default apiClient;
+export default apiC
